@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INVENTAUTOS - Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Tema Oscuro (por defecto) */
+        body {
+            font-family: 'Inter', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            overflow-x: hidden;
+            position: relative;
+            transition: background 0.3s ease;
+        }
+
+        /* Tema Claro */
+        body.light-mode {
+            background: linear-gradient(135deg, #e0e7ff 0%, #c4b5fd 50%, #a78bfa 100%);
+        }
+
+        /* Burbujas */
+        .bg-bubbles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .bubble {
+            position: absolute;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.4), rgba(102, 126, 234, 0.2));
+            border-radius: 50%;
+            animation: floatBubble linear infinite;
+            backdrop-filter: blur(2px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        @keyframes floatBubble {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            20% {
+                opacity: 0.6;
+            }
+            80% {
+                opacity: 0.4;
+            }
+            100% {
+                transform: translateY(-20vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        .login-wrapper {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            border-radius: 32px;
+            padding: 48px 40px;
+            width: 100%;
+            max-width: 480px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s ease;
+        }
+
+        body.light-mode .login-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: none;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 36px;
+            box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.4);
+        }
+
+        .login-header h1 {
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a8b2ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        body.light-mode .login-header h1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .login-header p {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 14px;
+        }
+
+        body.light-mode .login-header p {
+            color: #666;
+        }
+
+        .theme-toggle-login {
+            position: absolute;
+            top: 24px;
+            right: 24px;
+            z-index: 10;
+        }
+
+        .theme-btn-login {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .theme-btn-login {
+            background: white;
+            color: #667eea;
+            border-color: rgba(102, 126, 234, 0.3);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .theme-btn-login:hover {
+            transform: scale(1.02);
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        body.light-mode .theme-btn-login:hover {
+            background: #f0f0f0;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            font-size: 13px;
+        }
+
+        body.light-mode .input-group label {
+            color: #333;
+        }
+
+        .input-group label i {
+            margin-right: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding: 14px 48px 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 15px;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .input-wrapper input {
+            background: #f8f9fa;
+            border-color: #e0e0e0;
+            color: #333;
+        }
+
+        .input-wrapper input:focus {
+            outline: none;
+            border-color: #667eea;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        body.light-mode .input-wrapper input:focus {
+            background: #fff;
+            border-color: #667eea;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 16px;
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        body.light-mode .toggle-password {
+            color: #999;
+        }
+
+        .captcha-section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        body.light-mode .captcha-section {
+            background: #f0f2f5;
+            border-color: #e0e0e0;
+        }
+
+        .captcha-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        body.light-mode .captcha-label {
+            color: #555;
+        }
+
+        .captcha-box {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .captcha-imagen {
+            flex: 1;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-mode .captcha-imagen {
+            background: #fff;
+            border-color: #ddd;
+        }
+
+        .captcha-imagen img {
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+        }
+
+        .captcha-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-captcha {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: white;
+            padding: 12px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .btn-captcha {
+            background: #e0e0e0;
+            color: #666;
+            border-color: #ccc;
+        }
+
+        .btn-captcha:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.02);
+        }
+
+        .captcha-input input {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            font-size: 16px;
+            font-family: 'Inter', sans-serif;
+            color: white;
+            text-align: center;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .captcha-input input {
+            background: #f8f9fa;
+            border-color: #e0e0e0;
+            color: #333;
+        }
+
+        .captcha-input input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+        }
+
+        .btn-entrar {
+            flex: 1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-entrar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-cancelar {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.9);
+            padding: 14px 24px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        body.light-mode .btn-cancelar {
+            background: #e0e0e0;
+            color: #666;
+            border-color: #ccc;
+        }
+
+        .btn-cancelar:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+        }
+
+        body.light-mode .btn-cancelar:hover {
+            background: #d0d0d0;
+        }
+
+        .alert {
+            padding: 14px 18px;
+            margin-bottom: 24px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .alert-success {
+            background: rgba(40, 167, 69, 0.15);
+            color: #90ee90;
+            border: 1px solid rgba(40, 167, 69, 0.3);
+        }
+
+        body.light-mode .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: rgba(220, 53, 69, 0.15);
+            color: #ff9999;
+            border: 1px solid rgba(220, 53, 69, 0.3);
+        }
+
+        body.light-mode .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 32px 24px;
+            }
+            .captcha-box {
+                flex-direction: column;
+            }
+            .captcha-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            .button-group {
+                flex-direction: column;
+            }
+            .theme-toggle-login {
+                top: 16px;
+                right: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-bubbles" id="bubbles"></div>
+
+    <div class="theme-toggle-login">
+        <button id="themeToggle" class="theme-btn-login">
+            <i class="fas fa-sun"></i> Modo Claro
+        </button>
+    </div>
+
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="login-header">
+                <div class="logo-icon">🚗</div>
+                <h1>INVENTAUTOS</h1>
+                <p>Bienvenido de vuelta</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <i class="fas {% if category == 'success' %}fa-check-circle{% else %}fa-exclamation-circle{% endif %}"></i> {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" id="loginForm">
+                <div class="input-group">
+                    <label><i class="fas fa-user"></i> Usuario ID</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="usuario_id" required autofocus placeholder="admin">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label><i class="fas fa-lock"></i> Contraseña</label>
+                    <div class="input-wrapper">
+                        <input type="password" name="contrasena" id="password" required placeholder="••••••">
+                        <button type="button" class="toggle-password" onclick="togglePassword('password')">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="captcha-section">
+                    <div class="captcha-label">
+                        <i class="fas fa-shield-alt"></i> Código de Verificación
+                    </div>
+                    <div class="captcha-box">
+                        <div class="captcha-imagen">
+                            <img id="captchaImg" src="{{ url_for('captcha_imagen') }}" alt="CAPTCHA">
+                        </div>
+                        <div class="captcha-buttons">
+                            <button type="button" class="btn-captcha" onclick="refrescarCaptcha()" title="Actualizar CAPTCHA">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button type="button" class="btn-captcha" onclick="reproducirAudio()" title="Escuchar código">
+                                <i class="fas fa-volume-up"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="captcha-input">
+                        <input type="text" name="captcha" id="captcha" placeholder="Ingresa el código de la imagen" required autocomplete="off">
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button type="reset" class="btn-cancelar">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                    <button type="submit" class="btn-entrar">
+                        <i class="fas fa-arrow-right"></i> Entrar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Generar burbujas
+        function createBubbles() {
+            const container = document.getElementById('bubbles');
+            const bubbleCount = 60;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                const size = Math.random() * 80 + 20;
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.left = Math.random() * 100 + '%';
+                const duration = Math.random() * 15 + 8;
+                bubble.style.animationDuration = duration + 's';
+                const delay = Math.random() * 20;
+                bubble.style.animationDelay = delay + 's';
+                bubble.style.opacity = Math.random() * 0.5 + 0.1;
+                container.appendChild(bubble);
+            }
+        }
+        
+        createBubbles();
+
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = input.nextElementSibling.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+
+        function refrescarCaptcha() {
+            const img = document.getElementById('captchaImg');
+            img.src = "{{ url_for('captcha_imagen') }}?" + new Date().getTime();
+            document.getElementById('captcha').value = '';
+        }
+
+        function reproducirAudio() {
+            const audio = new Audio("{{ url_for('captcha_audio') }}?" + new Date().getTime());
+            audio.play().catch(e => console.log('Error al reproducir audio:', e));
+        }
+
+        // Función para cambiar tema
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const isLight = document.body.classList.contains('light-mode');
+            localStorage.setItem('lightMode', isLight);
+            const btn = document.getElementById('themeToggle');
+            if (btn) {
+                if (isLight) {
+                    btn.innerHTML = '<i class="fas fa-moon"></i> Modo Oscuro';
+                } else {
+                    btn.innerHTML = '<i class="fas fa-sun"></i> Modo Claro';
+                }
+            }
+        }
+
+        // Cargar tema guardado
+        const savedLightMode = localStorage.getItem('lightMode') === 'true';
+        if (savedLightMode) {
+            document.body.classList.add('light-mode');
+            const btn = document.getElementById('themeToggle');
+            if (btn) {
+                btn.innerHTML = '<i class="fas fa-moon"></i> Modo Oscuro';
+            }
+        }
+
+        const toggleBtn = document.getElementById('themeToggle');
+        if (toggleBtn) {
+            toggleBtn.addEventListener('click', toggleTheme);
+        }
+    </script>
+</body>
+</html>
